@@ -24,6 +24,7 @@ script:
   - cp -v ./my-config ./.config
   - cp -rv ./my-files ./files
 
+  - cp -rv ./my-dl ./dl
   - make download
 
   - make -j2 V=s
