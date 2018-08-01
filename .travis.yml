@@ -27,7 +27,11 @@ script:
   - cp -rv ./my-dl ./dl
   - make download
 
-  - travis_wait 30 make -j2
+  # Output something every 10 minutes or Travis kills the job
+  - while sleep 9m; do echo "=====[ still running ]====="; done &
+  - make -j2
+  # Killing background sleep loop
+  - kill %1
 
   - echo
   - ls -lh ./bin/targets/ar71xx/generic/*.bin
