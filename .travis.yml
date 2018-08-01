@@ -29,7 +29,7 @@ script:
 
   # Output something every 10 minutes or Travis kills the job
   - while sleep 9m; do echo "=====[ still running ]====="; done &
-  - make -j2
+  - make -j2 </dev/null 2>&1 | tee
   # Killing background sleep loop
   - kill %1
 
