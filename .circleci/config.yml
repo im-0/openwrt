@@ -19,6 +19,7 @@ jobs:
             make -j2 >/dev/null 2>&1
             sudo make install >/dev/null 2>&1
             cd .. && rm -fr file-5.34
+
       - run:
           name: "Build"
           command: |
@@ -33,14 +34,20 @@ jobs:
 
             make -j2 V=s
 
+      - run:
+          name: "Upload"
+          command: |
+            cd ./bin/targets/ar71xx/generic/
             echo
-            ls -lh ./bin/targets/ar71xx/generic/*.bin
+            ls -lh ./*.bin
             echo
-            sha512sum ./bin/targets/ar71xx/generic/*.bin
+            sha512sum ./*.bin
             echo
 
-            curl --upload-file ./bin/targets/ar71xx/generic/openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-factory.bin https://transfer.sh/openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-factory.bin
-            curl --upload-file ./bin/targets/ar71xx/generic/openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-sysupgrade.bin https://transfer.sh/openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-sysupgrade.bin
+            curl --upload-file ./openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-factory.bin https://transfer.sh/openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-factory.bin
+            echo
+            curl --upload-file ./openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-sysupgrade.bin https://transfer.sh/openwrt-ar71xx-generic-tl-wr1043nd-v1-squashfs-sysupgrade.bin
+            echo
 
 workflows:
   version: 2
