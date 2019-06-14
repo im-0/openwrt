@@ -12,8 +12,8 @@ jobs:
             curl -L https://packagecloud.io/circleci/trusty/gpgkey | sudo apt-key add -
 
             sudo apt-get -qq update
-            sudo apt-get -qq install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git gettext libssl-dev unzip wget python2.7 time xz-utils
-            sudo apt-get -qq purge file libmagic1 || true
+            sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git gettext libssl-dev unzip wget python2.7 time xz-utils
+            sudo DEBIAN_FRONTEND=noninteractive apt-get -qq purge file libmagic1 || true
 
             wget -q -c -t 0 -T 15 "https://fossies.org/linux/misc/file-5.34.tar.gz"
             tar xf file-5.34.tar.gz
