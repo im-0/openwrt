@@ -8,6 +8,9 @@ jobs:
       - run:
           name: "Install dependencies"
           command: |
+            curl -L https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            curl -L https://packagecloud.io/circleci/trusty/gpgkey | sudo apt-key add -
+
             sudo apt-get -qq update
             sudo apt-get -qq install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git gettext libssl-dev unzip wget python2.7 time xz-utils
             sudo apt-get -qq purge file libmagic1 || true
