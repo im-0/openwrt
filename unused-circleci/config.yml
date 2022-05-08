@@ -1,0 +1,61 @@
+version: 2.1
+
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:202007-01
+
+    steps:
+      - checkout
+
+      - run:
+          name: "Install dependencies"
+          command: |
+            sudo apt-get -qq update
+            sudo apt-get -qq install build-essential subversion libncurses5-dev zlib1g-dev gawk gcc-multilib flex git gettext libssl-dev unzip wget python2.7 time xz-utils
+            sudo apt-get -qq purge file libmagic1 || true
+
+            wget -q -c -t 0 -T 15 "https://ftp.osuosl.org/pub/lfs/lfs-packages/8.3/file-5.34.tar.gz"
+            tar xf file-5.34.tar.gz
+            cd file-5.34
+            ./configure --prefix=/usr --sysconfdir=/etc >/dev/null 2>&1
+            make -j2 >/dev/null 2>&1
+            sudo make install >/dev/null 2>&1
+            cd .. && rm -fr file-5.34
+
+      - run:
+          name: "Build"
+          command: |
+            ./scripts/feeds update -a
+            ./scripts/feeds install -a
+
+            cp -v ./my-config ./.config
+            cp -rv ./my-files ./files
+
+            make download
+
+            make -j2 V=s
+
+      - run:
+          name: "sha512"
+          command: |
+            cd ./bin/targets/ath79/generic/
+            echo
+            ls -lh ./*.bin
+            echo
+            sha512sum ./*.bin
+            echo
+
+      - store_artifacts:
+          path: ./bin/targets/ath79/generic/openwrt-ath79-generic-tplink_tl-wr1043nd-v1-squashfs-factory.bin
+          destination: openwrt-ath79-generic-tplink_tl-wr1043nd-v1-squashfs-factory.bin
+
+      - store_artifacts:
+          path: ./bin/targets/ath79/generic/openwrt-ath79-generic-tplink_tl-wr1043nd-v1-squashfs-sysupgrade.bin
+          destination: openwrt-ath79-generic-tplink_tl-wr1043nd-v1-squashfs-sysupgrade.bin
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build

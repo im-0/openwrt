@@ -627,7 +627,6 @@ define Package/wpad/install
 	$(call Install/supplicant,$(1))
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/wpad $(1)/usr/sbin/
 	$(LN) wpad $(1)/usr/sbin/hostapd
-	$(LN) wpad $(1)/usr/sbin/wpa_supplicant
 endef
 Package/wpad-basic/install = $(Package/wpad/install)
 Package/wpad-basic-openssl/install = $(Package/wpad/install)
