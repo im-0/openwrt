@@ -1,0 +1,23 @@
+) Remove unused (compiled but not loaded) USB-related modules:
+
+# lsmod 
+ath                    16992  0 
+ath9k                  90384  0 
+ath9k_common           11232  0 
+ath9k_hw              335040  0 
+cfg80211              244512  0 
+compat                  1088  0 
+cp210x                 12160  0 
+crc_ccitt               1632  0 
+ehci_fsl                3200  0 
+ehci_hcd               32368  0 
+ehci_platform           4640  0 
+fsl_mph_dr_of           3440  0 
+gpio_button_hotplug     6336  0 
+mac80211              465056  0 
+nls_base                4768  0 
+ohci_hcd               21840  0 
+ohci_platform           3488  0 
+usb_common              2576  0 
+usbcore               125440  0 
+usbserial              16752  0 
